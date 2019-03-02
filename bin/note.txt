@@ -1,0 +1,29 @@
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --list
+
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --delete --topic product-json
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --create --topic product-json --replication-factor 3 --partitions 3
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --describe --topic product-json
+
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --delete --topic category-json
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --create --topic category-json --replication-factor 3 --partitions 3
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --describe --topic category-json
+
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --delete --topic product-json-streaming-out
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --create --topic product-json-streaming-out --replication-factor 3 --partitions 3
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --describe --topic product-json-streaming-out
+
+./kafka-topics.sh --zookeeper centos-1:2181,centos-2:2181,centos-3:2181 --list
+
+
+./kafka-console-consumer.sh --bootstrap-server centos-1:9092,centos-2:9092,centos-3:9092 --topic product-json-streaming-out --property print.key=true --from-beginning
+./kafka-console-consumer.sh --bootstrap-server centos-1:9092,centos-2:9092,centos-3:9092 --topic product-json --from-beginning
+./kafka-console-consumer.sh --bootstrap-server centos-1:9092,centos-2:9092,centos-3:9092 --topic category-json --from-beginning
+
+
+./bin/start-data-filtering.sh product-json category-json category-state-store /tmp/kafka-streams-intro-0.0.1-SNAPSHOT/config/kafka-streams-config.properties
+
+./bin/start-data-injector.sh category-json ./config/category.key.template ./config/category.value.template 1 100 100 ./config/kafka-producer-config.properties 10
+./bin/start-data-injector.sh product-json ./config/product.key.template ./config/product.value.template 1 100 100 ./config/kafka-producer-config.properties 100
+
+scp kafka-streams-intro-0.0.1-SNAPSHOT hadoop@cenos-2:/tmp/
+scp ./lib/kafka-streams-intro-0.0.1-SNAPSHOT.jar hadoop@cenots-2:/tmp/kafka-streams-intro-0.0.1-SNAPSHOT/lib/
