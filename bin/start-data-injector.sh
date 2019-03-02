@@ -12,4 +12,4 @@ batchSize=$6
 configFile=$7
 totalBatches=$8
 
-nohup java -Dlogback.configurationFile=${parentDir}/config/logback.xml -cp ${CLASS_PATH}/*:${CLASS_PATH}/${project.build.finalName}.jar fuck.hsbc.kafka.stream.filter.FilterApp ${targetTopic} ${keyTemplateFile} ${valueTemplateFile} ${keyIncluded} ${keyExcluded} ${batchSize} ${configFile} ${totalBatches} </dev/null >/dev/null 2>&1 &
+nohup java -Dlogback.configurationFile=${parentDir}/config/injector-log.xml -cp ${CLASS_PATH}/*:${CLASS_PATH}/${project.build.finalName}.jar fuck.hsbc.kafka.stream.inject.InjectApp ${targetTopic} ${keyTemplateFile} ${valueTemplateFile} ${keyIncluded} ${keyExcluded} ${batchSize} ${configFile} ${totalBatches} </dev/null >/dev/null 2>&1 &
