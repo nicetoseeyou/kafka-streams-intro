@@ -25,11 +25,11 @@ public class DataFiltering implements Filter {
     private Set<String> filterCondition, leftKeys, leftValues, rightKeys;
     private Map<String, String> keyJoinerMap;
 
-    public DataFiltering(String leftInputTopic, String rightInputTopic, String rightStateStore, String leftOutputTopic, Properties config) {
+    public DataFiltering(String leftInputTopic, String rightInputTopic, String rightStateStore, Properties config) {
         this.leftInputTopic = leftInputTopic;
         this.rightInputTopic = rightInputTopic;
         this.rightStateStore = rightStateStore;
-        this.leftOutputTopic = leftOutputTopic;
+        this.leftOutputTopic = leftInputTopic + "-streaming-out";
         this.config = config;
     }
 
