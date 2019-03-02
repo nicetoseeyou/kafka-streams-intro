@@ -1,1 +1,1 @@
-{"category_id":%s,"category_code":"category-code-1","category_name":"category-name-1","parent_id":0,"category_level":2,"category_status":1,"description":"category description","create_time":1551459947000}
+{"category_id":%s,"category_code":"category-code-%s","category_name":"category-name-1","parent_id":0,"category_level":2,"category_status":1,"description":"category description","create_time":1551459947000}
