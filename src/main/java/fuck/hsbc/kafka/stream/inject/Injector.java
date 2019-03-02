@@ -31,7 +31,7 @@ public class Injector implements Runnable {
 
     private ProducerRecord<byte[], byte[]> getRecord(int randomKey) {
         byte[] key = String.format(keyTemplate, randomKey).getBytes();
-        byte[] value = String.format(valueTemplate, randomKey).getBytes();
+        byte[] value = String.format(valueTemplate, randomKey, randomKey).getBytes();
         return new ProducerRecord<>(targetTopic, key, value);
     }
 
